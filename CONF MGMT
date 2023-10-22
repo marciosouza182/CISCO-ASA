@@ -1,0 +1,17 @@
+Configurar a interface de geranciamento.
+
+int management 1/1
+nameif MGMT
+ip add 172.16.20.1 255.255.255.0
+no sh
+-------------------------------------------------------------------------------------------------------------------
+
+Configurar o acesso SSH
+
+ssh 172.16.20.0 255.255.255.0 MGMT
+
+-------------------------------------------------------------------------------------------------------------------
+Configurar username para acesso SSH
+
+username admin password cisco privilege 15
+aaa authentication ssh console LOCAL
