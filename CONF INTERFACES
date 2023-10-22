@@ -1,0 +1,33 @@
+Configurar interfaces
+
+int g1/1
+nameif INSIDE
+ip add 192.168.0.1 255.255.255.0
+no sh
+security-level 100
+
+exit
+
+int g1/2
+nameif DMZ
+security-level 50
+ip add 189.100.100.1 255.255.255.0
+no sh
+
+int g1/
+nameif OUTSIDE
+security-level 0
+ip add 200.100.100.1 255.255.255.0
+no sh
+--------------------------------------------------------------------------------------------------------------------
+Resolvendo o problema de ispenção do ICMP 
+
+fixup protocol icmp
+
+class-map inspection_default
+match any
+
+policy-map global_policy
+class inspection_default
+inspection icmp
+service-policy global_policy global
