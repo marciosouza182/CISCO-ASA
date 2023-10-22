@@ -1,0 +1,4 @@
+Habilitar ADSM
+
+http server enable
+http 0.0.0.0 0.0.0.0 mgmt
