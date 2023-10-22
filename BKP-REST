@@ -1,0 +1,9 @@
+Fazer backup para um server tftp
+
+copy running-config tftp 189.100.100.2
+bkp
+
+Restaurar o bkp
+
+copy tftp startup-config 189.100.100.2
+asa.bkp
