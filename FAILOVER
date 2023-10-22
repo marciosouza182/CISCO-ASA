@@ -1,0 +1,31 @@
+Comandos para configurar o failover
+
+###ASA FAILOVER-PRIMÁRIO
+
+int g0/0
+ ip address 172.16.8.30 255.255.252.0 standby 172.16.8.31
+!
+int g0/1
+ ip address 192.168.0.1 255.255.255.0 standby 192.168.0.2
+!
+int g0/6
+ no shut
+!
+failover lan unit primary
+failover lan interface FLINK G0/6
+failover link FLINK G0/6
+failover interface ip FLINK 1.1.1.1 255.255.255.0 standby 1.1.1.2
+failover
+!
+prompt hostname priority state
+
+###ASA FAILOVER-SECUNDÁRIO
+
+int g0/6
+ no shut
+!
+failover lan unit secondary
+failover lan interface FLINK G0/6
+failover link FLINK G0/6
+failover interface ip FLINK 1.1.1.1 255.255.255.0 standby 1.1.1.2
+failover
