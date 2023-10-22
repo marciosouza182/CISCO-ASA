@@ -6,3 +6,64 @@ access-list DMZ_access extended permit ip host 189.100.100.2 any
 access-list INSIDE_access extended permit tcp host 192.168.0.2 host 189.100.100.2 eq 433
 access-list INSIDE_access extended deny tcp 192.168.0.0 255.255.255.0 host 189.100.100.2 eq www ou 80
 access-group INSIDE_access in interface INSIDE
+#######################################################################################################################################################
+
+Configure essa ACE para permitir que qualquer endereço IP de origem na Internet se conecte ao servidor Web somente nas portas TCP 80 e 443. 
+Atribua a ACL à interface externa na direção de entrada:
+
+access-list OUT-IN extended permit tcp any host 172.30.0.10 eq www 
+access-list OUT-IN extended permit tcp any host 172.30.0.10 eq https  
+access-group OUT-IN in interface outside
+######################################################################################################################################################
+
+Configurar uma Ace para Permitir Acesso a um Servidor Web com um FQDN
+O cliente com endereço IP 10.10.10.2 localizado na rede local (LAN) tem permissão para acessar facebook.com.
+
+object network obj-10.10.10.2
+ host 10.10.10.2
+
+object network obj-facebook.com
+ fqdn facebook.com
+
+access-list IN-OUT extended permit ip object obj-10.10.10.2 object obj-facebook.com
+access-group IN-OUT in interface inside
+#####################################################################################################################################################
+
+Cenário 3. Configurar um Ace para Permitir Acesso a um Site Somente por um Período Específico em um Dia
+O cliente localizado na LAN tem permissão para acessar um site com o endereço IP 10.0.20.20 diariamente das 12 às 14 h IST apenas.
+
+Configure um objeto de intervalo de tempo para a duração de tempo necessária:
+
+time-range BREAK_TIME
+ periodic daily 12:00 to 14:00
+
+object network obj-website
+ host 10.0.20.20
+
+access-list IN-OUT extended permit ip any object obj-website time-range BREAK_TIME 
+access-group IN-OUT in interface inside
+#######################################################################################################################################################
+Negar tráfego Telnet (TCP, porta 23)
+
+interface ethernet0
+ ip access-group 102 in
+
+access-list 102 deny tcp any any eq 23
+access-list 102 permit ip any any
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
